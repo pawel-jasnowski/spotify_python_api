@@ -68,6 +68,24 @@ def search_for_song(token, song_name):
 
     return json_result
 
+
+################################ search top songs songs by artist
+
+def songs_by_artist(token, artist_id):
+    url = f'https://api.spotify.com/v1/artists/'
+    headers = get_auth_header(token)
+    query = f'{artist_id}/top-tracks'
+    query_url = url + query
+    result = get(query_url, headers=headers)
+    json_result = json.loads(result.content)["tracks"]
+
+    if len(json_result) == 0:
+        print("No song with given name ... ")
+        return None
+
+    return json_result
+
+
 ############################ listing of artists
 
 def list_of_artists(result):
@@ -78,22 +96,14 @@ def list_of_artists(result):
     print('#######################')
 
 ###################################### list of artist by given song title
-def artist_of_song(result):
-    print(f'\n#######################\nArtists of your song: \n#######################')
+def list_of_songs(result):
+    print(f'\n#######################\nSongs list: \n#######################')
     for i in range(len(result)):
         print(f'{i+1}. {result[i]["artists"][0]["name"]} - {result[i]["name"]}\n '
               f'Popularity: {result[i]["popularity"]}\n' )
 
     print('#######################')
 
-################################ list of songs by artist
-
-def get_songs_by_artist(token, artist_id):
-    url = f'https://api.spotify.com/v1/artist/{artist_id}/top-tracks?country=PL'
-    headers = get_auth_header(token)
-    result = get(url, headers=headers)
-    json_result = json.loads(result.content)["tracks"]
-    return json_result
 
 ###################################### MAIN
 
@@ -102,10 +112,12 @@ token = get_token()
 # artist = search_for_artist(token, "William Clarke")
 # list_of_artists(artist)
 
-song  = search_for_song(token, 'Cry me a river ')
-print(song[0].keys())
-artist_of_song(song)
+# song  = search_for_song(token, 'Cry me a river ')
+# # print(song[0].keys())
+# list_of_songs(song)
 
+songs = songs_by_artist(token,'2eECVTTCHnDwsBirJPiDke')
+list_of_songs(songs)
 
 
 
