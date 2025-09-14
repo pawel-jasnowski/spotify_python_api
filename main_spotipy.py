@@ -63,7 +63,7 @@ def top_songs(artist, country):
 
     else: print(f"No artist name: '{artist}' found ... ")
 
-##########################
+########################## ARTISTS BY GENRE
 
 def artist_in_genre(genre):
 
