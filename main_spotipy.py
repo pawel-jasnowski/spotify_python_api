@@ -84,3 +84,34 @@ def artist_in_genre(genre):
 # top_songs('Queen', 'US')
 
 # artist_in_genre('blues')
+
+def main():
+    while True:
+        print('\n************ SPOTIFY CLI Explorer ************\n')
+        print('1. Search by ARTIST\n')
+        print('2. Search by TOP SONG of ARTIST in given COUNTRY\n')
+        print('3. Search by TOP ARTIST by GENRE\n')
+        print('4. EXIT\n')
+
+        choice = input("ENTER number of yout choice:   ").strip()
+
+        if choice == '1':
+            name = input("Enter artist name: ").strip()
+            search_for_artist(name)
+        elif choice =='2':
+            name = input("Enter artist name: ").strip()
+            country = input("Enter coutnry code: " ).strip()
+            top_songs(name, country)
+        elif choice =='3':
+            genre = input("Enter genre: ").strip()
+            artist_in_genre(genre)
+        elif choice == '4':
+            print("See you again soon")
+            break
+        else: print("Invalid choice. Try again. \n")
+
+
+
+
+if __name__ == "__main__":
+    main()
