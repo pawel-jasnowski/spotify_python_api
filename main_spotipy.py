@@ -12,17 +12,18 @@ load_dotenv()
 client_id = os.getenv("CLIENT_ID")
 client_secret = os.getenv("CLIENT_SECRET")
 
+
+############################## SPOTIPY
 # AUTHENTICATION IN SPOTIPY
+# Authenticate with Spotify using Client Credentials Flow
+
 auth_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
 sp = spotipy.Spotify(auth_manager=auth_manager)
 
 # print(client_id, client_secret)
 
-############################## SPOTIPY
 
-# Authenticate with Spotify using Client Credentials Flow
-
-#search for artists
+#######################################search for artists
 def search_for_artist(artist):
 
     # SEARCH FOR ARTISTS
@@ -76,6 +77,25 @@ def artist_in_genre(genre):
 
     else: print(f"No artists in genre: '{genre}' found ... ")
 
+#################### next action
+
+def next_action():
+
+    """Ask user what to do next"""
+
+    while True:
+        print("\nWhat do you want to do next?\n")
+        print("1. Back to main menu: \n")
+        print("2. EXIT\n")
+
+        choice = input("Enter your choice: \n").strip()
+        if choice =="1":
+            return True # go back to main menu
+        elif choice == "2":
+            print("See you again soon\n")
+            return False
+        else: print("Invalid choice, try again\n")
+
 
 ############################# MAIN
 
@@ -98,18 +118,23 @@ def main():
         if choice == '1':
             name = input("Enter artist name: ").strip()
             search_for_artist(name)
+            if not next_action():
+                break
         elif choice =='2':
             name = input("Enter artist name: ").strip()
             country = input("Enter coutnry code: " ).strip()
             top_songs(name, country)
+            if not next_action():
+                break
         elif choice =='3':
             genre = input("Enter genre: ").strip()
             artist_in_genre(genre)
+            if not next_action():
+                break
         elif choice == '4':
             print("See you again soon")
             break
         else: print("Invalid choice. Try again. \n")
-
 
 
 
