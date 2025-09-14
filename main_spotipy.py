@@ -12,6 +12,10 @@ load_dotenv()
 client_id = os.getenv("CLIENT_ID")
 client_secret = os.getenv("CLIENT_SECRET")
 
+# AUTHENTICATION IN SPOTIPY
+auth_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
+sp = spotipy.Spotify(auth_manager=auth_manager)
+
 # print(client_id, client_secret)
 
 ############################## SPOTIPY
@@ -20,10 +24,6 @@ client_secret = os.getenv("CLIENT_SECRET")
 
 #search for artists
 def search_for_artist(artist):
-
-     # AUTHENTICATION IN SPOTIPY
-    auth_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
-    sp = spotipy.Spotify(auth_manager=auth_manager)
 
     # SEARCH FOR ARTISTS
     artist_name = artist
@@ -40,21 +40,17 @@ def search_for_artist(artist):
         print(f'No artist found for " {artist_name} " ')
 
 
-########################## TOP 5 songs in country
+########################## TOP 5 songs in given country
 
 def top_songs(artist, country):
-    # AUTHENTICATION IN SPOTIPY
-    auth_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
-    sp = spotipy.Spotify(auth_manager=auth_manager)
 
     # SEARCH FOR ARTISTS
     artist_name = artist
     results = sp.search(q=f'artist:{artist_name}', type='artist', limit=1)
-    artists = results['artists']['items']
+    artists = results['artists']['items'][0]
 
     if artists:
-        artist_id = artist["id"]
-        artist = artists[0]
+        artist_id = artists["id"]
     # SEARCH FOR SONGS
         top_tracks = sp.artist_top_tracks(artist_id, country)
         print(f"\nTop 5 most popular tracks of '{artist_name}' in {country} are:")
@@ -67,18 +63,15 @@ def top_songs(artist, country):
 
 def artist_in_genre(genre):
 
-     # AUTHENTICATION IN SPOTIPY
-    auth_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
-    sp = spotipy.Spotify(auth_manager=auth_manager)
-
     # SEARCH FOR ARTISTS
     genre = genre
-    results = sp.search(q=f'genre:{genre}', type='artist', limit=15)
+    results = sp.search(q=f'genre:{genre}', type='artist')
     artists = results['artists']['items']
     artists_sorted = sorted(artists, key = lambda a: a['followers']['total'], reverse = True)
     if artists_sorted:
+        print(f"\nTop artists in '{genre}' are:\n")
         for i, artist in enumerate(artists_sorted, start=1):
-            print(f"{i}. {artist['name']} - {artist['genres']} - total followers: {artist['followers']['total']}")
+            print(f"{i}. {artist['name']} - genres: {', '.join(artist['genres']) if artist['genres'] else 'No genres listed'} - total followers: {artist['followers']['total']}")
 
 
     else: print(f"No artists in genre: '{genre}' found ... ")
@@ -88,7 +81,6 @@ def artist_in_genre(genre):
 
 # search_for_artist('Howlin Wolf',)
 
-# top_songs('Queen', 'PL')
+# top_songs('Queen', 'US')
 
-artist_in_genre('blues')
-
+# artist_in_genre('blues')
