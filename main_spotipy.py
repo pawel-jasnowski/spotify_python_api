@@ -97,15 +97,22 @@ def artist_albums(artist):
     # SEARCH FOR albums
     results = sp.search(q=f'artist:{artist}', type='artist', limit=1)
     artists = results['artists']['items']
+
     if not artists:
-        print(f'No artist found for " {artist} " ')
+        print(f'No artist found for "{artist}"')
         return
-    else:
-        artist_id = artists[0]['id']
-        albums = sp.artist_albums(artist_id,album_type='album')
-        print(f"Albums by {artist}: ")
-        for i, album in enumerate(albums['items'][:20], start =1):
-            print(f"{i}. {album['name']} - ({album['release_date']})")
+
+    artist_id = artists[0]['id']
+    albums = sp.artist_albums(artist_id, album_type='album')
+
+    if not albums or not albums.get('items'):
+        print(f'No albums found for "{artist}"')
+        return
+
+    print(f"\nAlbums by {artist}:")
+    for i, album in enumerate(albums['items'][:20], start=1):
+        print(f"{i}. {album['name']} - ({album['release_date']})")
+
 
 
 #################### next action
@@ -178,10 +185,21 @@ def main():
 
 if __name__ == "__main__":
     main()
-
+#
 
 ######################## TEMP below ####################33
 # artist_name = 'asdfghjklqwerty'
 # results = sp.search(q=f'artist:{artist_name}', type='artist', limit=1)
 # artists = results['artists']['items']
 # print(json.dumps(results, indent=2))
+
+# def artist_albums_temp(artist):
+#     # SEARCH FOR albums
+#     results = sp.search(q=f'artist:{artist}', type='artist', limit=1)
+#     artists = results['artists']['items']
+#     artist_id = artists[0]['id']
+#     albums = sp.artist_albums(artist_id, album_type='album')
+#
+#
+#
+# artist_albums_temp('tupac')
