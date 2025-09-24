@@ -23,6 +23,12 @@ countries = list(sp.available_markets()['markets'])   # country codes on availab
 
 # print(client_id, client_secret)
 
+
+############################## Country list available on SPOTIFY
+def list_countries():
+    print("\nAvailable Spotify country codes:\n")
+    print(", ".join(countries))
+
 #######################################search for artists
 def search_for_artist(artist):
 
@@ -34,7 +40,7 @@ def search_for_artist(artist):
     if artists_sorted:
         print(f"Found {len(artists_sorted)} artists matching '{artist_name}':\n")
         for i, artist in enumerate(artists_sorted, start=1):
-            print(f"{i}. - {artist['name']}   \n     Genres: {', '.join(artist['genres']) if artist['genres']  else 'No genres listed'}\n     Followers: {artist['followers']['total']}")
+            print(f"{i}. - {artist['name']}\n     Genres: {', '.join(artist['genres']) if artist['genres']  else 'No genres listed'}\n     Followers: {artist['followers']['total']}\n     Popularity: {artist['popularity']}")
             # print(f"")
             # print("\n")
     else:
@@ -85,6 +91,23 @@ def artist_in_genre(genre):
 
     else: print(f"No artists in genre: '{genre}' found ... ")
 
+################### Search Albums from artist
+
+def artist_albums(artist):
+    # SEARCH FOR albums
+    artist_name = artist
+    results = sp.search(q=f'artist:{artist_name}', type='artist', limit=1)
+    artists = results['artists']['items']
+    if not artists:
+        print(f'No artist found for " {artist_name} " ')
+    else:
+        artist_id = artists[0]['id']
+        albums = sp.artist_albums(artist_id,album_type='album')
+        print(f"Albums by {artist}: ")
+        for i, album in enumerate(albums['items'][:50], start =1):
+            print(f"{i}. {album['name']} - ({album['release_date']})")
+
+
 #################### next action
 def next_action():
 
@@ -120,7 +143,8 @@ def main():
         print('1. Search by ARTIST\n')
         print('2. Search by TOP SONG of ARTIST in given COUNTRY\n')
         print('3. Search by TOP ARTIST by GENRE\n')
-        print('4. EXIT\n')
+        print('4. Search by ALBUMS of ARTIST\n')
+        print('5. EXIT\n')
 
         choice = input("ENTER number of your choice: ").strip()
 
@@ -130,7 +154,8 @@ def main():
 
         elif choice =='2':
             name = input("Enter artist name: ").strip()
-            country = input("Enter country code (i.e. PL/US/IT/GE) : " ).strip().upper()
+            list_countries()
+            country = input("\nEnter country code (i.e. PL/US/IT/GE) : " ).strip().upper()
             top_songs(name, country)
 
         elif choice =='3':
@@ -138,6 +163,10 @@ def main():
             artist_in_genre(genre)
 
         elif choice == '4':
+            artist = input("Enter artist name: ").strip()
+            artist_albums(artist)
+
+        elif choice == '5':
             print("See you again soon")
             break
 
