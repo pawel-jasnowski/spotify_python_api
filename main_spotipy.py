@@ -101,7 +101,7 @@ def next_action():
             return True # go back to main menu
         elif choice == "2":
             print("See you again soon\n")
-            return False
+            return False # exit and close the main
         else: print("Invalid choice, try again\n")
 
 
