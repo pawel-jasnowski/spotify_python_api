@@ -17,7 +17,7 @@ You can search for artists, fetch their top songs by country, list top artists b
 2. Create virtual env
 3. Instal requirements
 4. Create .env file with yout SPOTIFY API credential
-5. Run the CLI
+5. Run the CLI (main_spotipy.py)
 6. Enjoy!
 
    Share and comment!
