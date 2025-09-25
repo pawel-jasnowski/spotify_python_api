@@ -187,19 +187,4 @@ if __name__ == "__main__":
     main()
 #
 
-######################## TEMP below ####################33
-# artist_name = 'asdfghjklqwerty'
-# results = sp.search(q=f'artist:{artist_name}', type='artist', limit=1)
-# artists = results['artists']['items']
-# print(json.dumps(results, indent=2))
-
-# def artist_albums_temp(artist):
-#     # SEARCH FOR albums
-#     results = sp.search(q=f'artist:{artist}', type='artist', limit=1)
-#     artists = results['artists']['items']
-#     artist_id = artists[0]['id']
-#     albums = sp.artist_albums(artist_id, album_type='album')
-#
-#
-#
-# artist_albums_temp('tupac')
+######################## TEMP below ####################3
