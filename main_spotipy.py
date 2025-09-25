@@ -137,12 +137,6 @@ def next_action():
 
 ############################# MAIN
 
-# search_for_artist('Howlin Wolf',)
-
-# top_songs('Queen', 'US')
-
-# artist_in_genre('blues')
-
 def main():
     running = True
     while running:
@@ -185,6 +179,5 @@ def main():
 
 if __name__ == "__main__":
     main()
-#
 
 ######################## TEMP below ####################3
